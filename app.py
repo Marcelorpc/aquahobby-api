@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -13,6 +13,39 @@ class Aquarium(db.Model):
    temperature = db.Column(db.Float, nullable=False)
    ph = db.Column(db.Float, nullable=False)
 
+@app.route('/api/aquarium/add', methods=["POST"])
+def create_aquarium():
+  data = request.json
+
+  required_fields = ["name", "volume", "temperature", "ph"]
+  if not all(field in data for field in required_fields):
+    return jsonify({"message": "Dados inválidos: campos obrigatórios ausentes"}), 400
+
+  if not isinstance(data["name"], str):
+    return jsonify({"message": "O nome deve ser uma string"}), 400
+    
+  if not isinstance(data["volume"], int):
+    return jsonify({"message": "O volume deve ser um número inteiro"}), 400
+
+  if not isinstance(data["temperature"], (int, float)):
+    return jsonify({"message": "A temperatura deve ser um número"}), 400
+
+  if not isinstance(data["ph"], (int, float)):
+    return jsonify({"message": "O pH deve ser um número"}), 400
+  
+  aquarium = Aquarium(name=data["name"], volume=data["volume"], temperature=data["temperature"], ph=data["ph"])
+  db.session.add(aquarium)
+  db.session.commit()
+  return jsonify({"message": "Aquário criado com sucesso!"})
+
+@app.route('/api/aquarium/delete/<int:aquarium_id>', methods=["DELETE"])
+def delete_aquarium(aquarium_id):
+  aquarium = Aquarium.query.get(aquarium_id)
+  if aquarium:
+    db.session.delete(aquarium)
+    db.session.commit()
+    return jsonify({"message": "Aquário removido com sucesso!"})
+  return jsonify({"message": "Aquário não encontrado!"}), 404
 
 @app.route('/')
 def hello_world():
