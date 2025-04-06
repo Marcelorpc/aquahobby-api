@@ -103,3 +103,36 @@ def del_aquario(query: AquarioBuscaSchema):
     else:
         error_msg = "Aquário não encontrado na base :/"
         return {"mesage": error_msg}, 404
+
+
+@app.put('/aquario', tags=[aquario_tag],
+         responses={"200": AquarioViewSchema, "404": ErrorSchema, "400": ErrorSchema})
+def update_aquario(query: AquarioBuscaSchema, form: AquarioUpdateSchema):
+    """Atualiza um aquário existente na base de dados
+
+    Retorna a representação do aquário atualizado.
+    """
+    session = Session()
+    aquario = session.query(Aquario).filter(Aquario.nome == query.nome).first()
+
+    if not aquario:
+        error_msg = "Aquário não encontrado na base :/"
+        return {"mesage": error_msg}, 404
+
+    # Atualiza apenas os campos fornecidos no form
+    if form.nome is not None:
+        aquario.nome = form.nome
+    if form.volume is not None:
+        aquario.volume = form.volume
+    if form.temperatura is not None:
+        aquario.temperatura = form.temperatura
+    if form.ph is not None:
+        aquario.ph = form.ph
+
+    try:
+        session.commit()
+        return apresenta_aquario(aquario), 200
+
+    except Exception as e:
+        error_msg = f"Erro ao atualizar o aquário: {str(e)}"
+        return {"mesage": error_msg}, 400

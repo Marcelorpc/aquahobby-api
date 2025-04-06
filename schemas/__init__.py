@@ -1,4 +1,4 @@
 from schemas.aquario import AquarioSchema, AquarioBuscaSchema, AquarioViewSchema, \
-                            ListagemAquariosSchema, AquarioDelSchema, apresenta_aquarios, \
-                            apresenta_aquario
+                            ListagemAquariosSchema, AquarioDelSchema, AquarioUpdateSchema, \
+                            apresenta_aquario, apresenta_aquarios
 from schemas.error import ErrorSchema

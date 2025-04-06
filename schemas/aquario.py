@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from model.aquario import Aquario
 
 class AquarioSchema(BaseModel):
@@ -39,6 +39,13 @@ class AquarioDelSchema(BaseModel):
     mesage: str
     nome: str
 
+class AquarioUpdateSchema(BaseModel):
+    """ Define os dados permitidos para atualização de um aquário 
+    """
+    nome: Optional[str]
+    volume: Optional[int]
+    temperatura: Optional[float]
+    ph: Optional[float]
 
 def apresenta_aquarios(aquarios: List[Aquario]):
     """ Retorna uma lista de aquários conforme representação definida no schema AquarioViewSchema.
