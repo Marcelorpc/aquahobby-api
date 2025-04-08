@@ -14,7 +14,7 @@ class AquarioSchema(BaseModel):
 class AquarioBuscaSchema(BaseModel):
     """ Estrutura que define os dados necessários para buscar um aquário pelo nome.
     """
-    nome: str = "Teste"
+    nome: str = ""
 
 
 class ListagemAquariosSchema(BaseModel):
@@ -42,7 +42,7 @@ class AquarioDelSchema(BaseModel):
 class AquarioUpdateSchema(BaseModel):
     """ Define os dados permitidos para atualização de um aquário 
     """
-    nome: Optional[str]
+    nome: Optional[str] = ''
     volume: Optional[int]
     temperatura: Optional[float]
     ph: Optional[float]
