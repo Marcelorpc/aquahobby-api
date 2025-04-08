@@ -1,5 +1,5 @@
 from flask_openapi3 import OpenAPI, Info, Tag
-from flask import redirect
+from flask import redirect, request, jsonify
 from urllib.parse import unquote
 
 from sqlalchemy.exc import IntegrityError
@@ -26,16 +26,18 @@ def home():
 
 @app.post('/aquario', tags=[aquario_tag],
           responses={"200": AquarioViewSchema, "409": ErrorSchema, "400": ErrorSchema})
-def add_aquario(form: AquarioSchema):
+def add_aquario(body: AquarioSchema):
     """Adiciona um novo Aquario à base de dados
 
-    Retorna uma representação dos aquários.
+    Retorna uma representação do aquário.
     """
+
     aquario = Aquario(
-        nome=form.nome,
-        volume=form.volume,
-        temperatura=form.temperatura,
-        ph=form.ph)
+        nome= body.nome,
+        volume= body.volume,
+        temperatura= body.temperatura,
+        ph= body.ph
+        )
     try:
         session = Session()
         session.add(aquario)
@@ -107,7 +109,7 @@ def del_aquario(query: AquarioBuscaSchema):
 
 @app.put('/aquario', tags=[aquario_tag],
          responses={"200": AquarioViewSchema, "404": ErrorSchema, "400": ErrorSchema})
-def update_aquario(query: AquarioBuscaSchema, form: AquarioUpdateSchema):
+def update_aquario(query: AquarioBuscaSchema, body: AquarioUpdateSchema):
     """Atualiza um aquário existente na base de dados
 
     Retorna a representação do aquário atualizado.
@@ -120,14 +122,14 @@ def update_aquario(query: AquarioBuscaSchema, form: AquarioUpdateSchema):
         return {"mesage": error_msg}, 404
 
     # Atualiza apenas os campos fornecidos no form
-    if form.nome is not None:
-        aquario.nome = form.nome
-    if form.volume is not None:
-        aquario.volume = form.volume
-    if form.temperatura is not None:
-        aquario.temperatura = form.temperatura
-    if form.ph is not None:
-        aquario.ph = form.ph
+    if body.nome is not None:
+        aquario.nome = body.nome
+    if body.volume is not None:
+        aquario.volume = body.volume
+    if body.temperatura is not None:
+        aquario.temperatura = body.temperatura
+    if body.ph is not None:
+        aquario.ph = body.ph
 
     try:
         session.commit()
