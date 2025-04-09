@@ -5,10 +5,10 @@ from model.aquario import Aquario
 class AquarioSchema(BaseModel):
     """ Representa os dados de entrada para criação de um novo aquário
     """
-    nome: str = "Aquário Lagoa Azul"
-    volume: int = 500
-    temperatura: float = 22.5
-    ph: float = 6.5
+    nome: str 
+    volume: int 
+    temperatura: float
+    ph: float
 
 
 class AquarioBuscaSchema(BaseModel):
@@ -26,11 +26,11 @@ class ListagemAquariosSchema(BaseModel):
 class AquarioViewSchema(BaseModel):
     """ Define a estrutura de retorno dos dados de um aquário.
     """
-    id: int = 1
-    nome: str = "Aquário Lagoa Azul"
-    volume: int = 500
-    temperatura: float = 22.5
-    ph: float = 6.5
+    id: int 
+    nome: str 
+    volume: int 
+    temperatura: float 
+    ph: float 
 
 
 class AquarioDelSchema(BaseModel):
