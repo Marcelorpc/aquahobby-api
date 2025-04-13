@@ -45,11 +45,11 @@ def add_aquario(body: AquarioSchema):
         return apresenta_aquario(aquario), 200
 
     except IntegrityError as e:
-        error_msg = "Aquário de mesmo nome já salvo na base :/"
+        error_msg = "Aquário de mesmo nome já salvo na base"
         return {"message": error_msg}, 409
 
     except Exception as e:
-        error_msg = "Não foi possível salvar novo item :/"
+        error_msg = "Não foi possível salvar novo item"
         return {"message": error_msg}, 400
 
 
@@ -81,7 +81,7 @@ def get_aquario(query: AquarioBuscaSchema):
     aquario = session.query(Aquario).filter(Aquario.nome == aquario_nome).first()
 
     if not aquario:
-        error_msg = "Aquário não encontrado na base :/"
+        error_msg = "Aquário não encontrado na base"
         return {"message": error_msg}, 404
     else:
         return apresenta_aquario(aquario), 200
@@ -103,7 +103,7 @@ def del_aquario(query: AquarioBuscaSchema):
     if count:
         return {"message": "Aquário removido", "id": aquario_nome}
     else:
-        error_msg = "Aquário não encontrado na base :/"
+        error_msg = "Aquário não encontrado na base"
         return {"message": error_msg}, 404
 
 
@@ -118,7 +118,7 @@ def update_aquario(query: AquarioBuscaSchema, body: AquarioUpdateSchema):
     aquario = session.query(Aquario).filter(Aquario.nome == query.nome).first()
 
     if not aquario:
-        error_msg = "Aquário não encontrado na base :/"
+        error_msg = "Aquário não encontrado na base"
         return {"message": error_msg}, 404
 
     # Atualiza apenas os campos fornecidos no form
