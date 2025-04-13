@@ -122,7 +122,7 @@ def update_aquario(query: AquarioBuscaSchema, body: AquarioUpdateSchema):
         return {"message": error_msg}, 404
 
     # Atualiza apenas os campos fornecidos no form
-    if body.nome is not None:
+    if body.nome is not None and body.nome.strip() != "":
         aquario.nome = body.nome
     if body.volume is not None:
         aquario.volume = body.volume
