@@ -10,6 +10,9 @@ Esta API tem como finalidade cadastrar, editar, visualizar e remover aquários e
 
 * pH
 
+### Observações
+
+- O projeto foi desenvolvido como parte da entrega do MVP da sprint de **Desenvolvimento Full Stack Básico** da pós-graduação em **Engenharia de Software da PUC-Rio**.
 
 ## 1 - Preparando o ambiente
 
