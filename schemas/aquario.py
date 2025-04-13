@@ -36,7 +36,7 @@ class AquarioViewSchema(BaseModel):
 class AquarioDelSchema(BaseModel):
     """ Define a estrutura de resposta após a exclusão de um aquário.
     """
-    mesage: str
+    message: str
     nome: str
 
 class AquarioUpdateSchema(BaseModel):
